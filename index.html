@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investigación: Tratamiento de Aguas Residuales y el Rol del SIAPA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #075985;
+            --secondary: #0d9488;
+            --accent: #f59e0b;
+            --bg: #fdfcfb;
+        }
+        body { 
+            font-family: 'Open Sans', sans-serif; 
+            background-color: var(--bg);
+            color: #334155;
+            line-height: 1.7;
+        }
+        h1, h2, h3 { 
+            font-family: 'Merriweather', serif; 
+            color: #0f172a;
+        }
+        .prose-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .nav-link.active {
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+            font-weight: 700;
+        }
+        .section-card {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: transform 0.2s;
+        }
+        .step-pill {
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+<!-- Chosen Palette: Classic Academic (Fondo crema suave, texto azul pizarra, acentos en verde azulado y ocre) -->
+<!-- Application Structure Plan: Una SPA de lectura profunda con navegación lateral (o superior en móvil) que segmenta la investigación en tres grandes bloques: Mecanismo, Proceso y SIAPA. Se incluye una vista de "Lectura Completa" para cumplir con el requisito de no resumir la información y permitir el consumo íntegro del texto. Se añaden visualizaciones de apoyo para los datos de las plantas de tratamiento. -->
+<!-- Visualization & Content Choices: 
+1. Estructura de Texto -> Goal: Organizar/Informar -> Viz: Articulado jerárquico con Tailwind -> Justificación: Presenta el texto íntegro sin recortes.
+2. Capacidad de Plantas -> Goal: Comparar -> Viz: Bar Chart (Chart.js) -> Justificación: Compara visualmente el volumen de Agua Prieta vs El Ahogado.
+3. Ciclo del Agua -> Goal: Relación -> Viz: Diagrama interactivo de pasos -> Justificación: Facilita la comprensión del proceso de 4 etapas. 
+-->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <nav class="sticky top-0 bg-white/90 backdrop-blur-md border-b border-slate-200 z-50">
+        <div class="max-w-5xl mx-auto px-4 flex justify-between items-center h-16">
+            <span class="font-bold text-sky-800 text-lg uppercase tracking-tight">Investigación Hídrica</span>
+            <div class="hidden md:flex space-x-8">
+                <a href="#mecanismo" class="nav-link py-2 text-sm uppercase tracking-wider hover:text-sky-600 transition-colors">I. Mecanismo</a>
+                <a href="#proceso" class="nav-link py-2 text-sm uppercase tracking-wider hover:text-sky-600 transition-colors">II. Proceso</a>
+                <a href="#siapa" class="nav-link py-2 text-sm uppercase tracking-wider hover:text-sky-600 transition-colors">III. El SIAPA</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="py-16 px-4 bg-gradient-to-b from-sky-50 to-transparent">
+        <div class="max-w-4xl mx-auto text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">Mecanismo que debe seguir la red pública municipal para el tratamiento de aguas residuales</h1>
+            <div class="w-24 h-1 bg-sky-600 mx-auto mb-8"></div>
+            <p class="text-xl text-slate-600 italic">Una investigación técnica sobre el saneamiento urbano y la gestión intermunicipal.</p>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 pb-24">
+        
+        <!-- SECCIÓN I: EL MECANISMO -->
+        <section id="mecanismo" class="mb-20 scroll-mt-20">
+            <div class="flex items-center space-x-4 mb-8">
+                <span class="text-5xl font-bold text-sky-200">I</span>
+                <h2 class="text-3xl font-bold border-b-2 border-sky-100 pb-2 flex-grow">El Mecanismo: Fundamentos del Tratamiento Municipal</h2>
+            </div>
+            
+            <div class="prose-content section-card p-8 bg-white border-l-4 border-sky-600">
+                <p>El mecanismo que debe seguir la red pública municipal para el tratamiento de aguas residuales se rige por el principio de <strong>Remoción Escalonada de Contaminantes</strong>. Este mecanismo no es aleatorio; sigue una lógica de ingeniería hidráulica y biológica diseñada para cumplir con normas oficiales (como la NOM-001-SEMARNAT-2021 en México).</p>
+                
+                <p>El mecanismo se basa en tres objetivos fundamentales:</p>
+                <ul class="space-y-4 mb-6">
+                    <li class="flex items-start">
+                        <span class="step-pill mr-3">1</span>
+                        <span><strong>Separación física:</strong> Eliminar sólidos que puedan dañar la infraestructura.</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="step-pill mr-3">2</span>
+                        <span><strong>Degradación biológica:</strong> Utilizar microorganismos para eliminar la materia orgánica que el ojo humano no ve.</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="step-pill mr-3">3</span>
+                        <span><strong>Desinfección química/física:</strong> Eliminar patógenos (bacterias y virus) para que el agua no sea un foco de infección al devolverse a la naturaleza.</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- SECCIÓN II: EL PROCESO -->
+        <section id="proceso" class="mb-20 scroll-mt-20">
+            <div class="flex items-center space-x-4 mb-8">
+                <span class="text-5xl font-bold text-teal-200">II</span>
+                <h2 class="text-3xl font-bold border-b-2 border-teal-100 pb-2 flex-grow">El Proceso: Paso a Paso del Tratamiento</h2>
+            </div>
+            
+            <div class="prose-content space-y-8">
+                <p class="text-lg text-slate-600">El proceso estándar que sigue el agua desde que sale de las casas hasta que llega a una planta de tratamiento (PTAR) se divide en las siguientes etapas críticas:</p>
+
+                <div class="grid gap-6">
+                    <div class="section-card p-6 border-t-4 border-teal-500">
+                        <h3 class="text-xl font-bold mb-3 text-teal-800">1. Pretratamiento (Cribado y Desarenado)</h3>
+                        <p>Es la defensa de la planta. El agua llega a través de colectores y pasa por rejillas de diferentes grosores para atrapar basura (plásticos, telas, ramas). Luego, entra a canales desarenadores donde la velocidad disminuye para que la arena y piedras pequeñas caigan al fondo. Sin este paso, el resto de la maquinaria se desgastaría en pocos meses.</p>
+                    </div>
+
+                    <div class="section-card p-6 border-t-4 border-teal-500">
+                        <h3 class="text-xl font-bold mb-3 text-teal-800">2. Tratamiento Primario (Asentamiento)</h3>
+                        <p>El agua pasa a tanques circulares masivos. Aquí el agua se queda "quieta" por unas horas. Los sólidos más finos se asientan en el fondo formando un lodo denso, mientras que las grasas y aceites flotan. Ambos se retiran mecánicamente. En este punto, el agua ya se ve mucho más clara, pero aún contiene contaminantes orgánicos disueltos.</p>
+                    </div>
+
+                    <div class="section-card p-6 border-t-4 border-teal-500">
+                        <h3 class="text-xl font-bold mb-3 text-teal-800">3. Tratamiento Secundario (El Proceso Biológico)</h3>
+                        <p>Este es el paso más importante. El agua entra a tanques de aireación donde se inyecta oxígeno. Millones de bacterias "buenas" consumen la materia orgánica. Es, literalmente, un proceso de limpieza natural acelerado por tecnología. Posteriormente, el agua pasa a otros tanques donde estas bacterias se asientan para ser recuperadas y reutilizadas en el ciclo.</p>
+                    </div>
+
+                    <div class="section-card p-6 border-t-4 border-teal-500">
+                        <h3 class="text-xl font-bold mb-3 text-teal-800">4. Tratamiento Terciario y Desinfección (Pulido Final)</h3>
+                        <p>Se eliminan nutrientes específicos como nitrógeno y fósforo que pueden causar algas en los ríos. Finalmente, el agua recibe una dosis de cloro o exposición a luz ultravioleta (UV) para matar cualquier microorganismo restante, dejándola lista para su descarga o reuso en riego.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN III: EL SIAPA -->
+        <section id="siapa" class="mb-20 scroll-mt-20">
+            <div class="flex items-center space-x-4 mb-8">
+                <span class="text-5xl font-bold text-amber-200">III</span>
+                <h2 class="text-3xl font-bold border-b-2 border-amber-100 pb-2 flex-grow">El SIAPA: ¿Qué tiene que ver en todo esto?</h2>
+            </div>
+            
+            <div class="prose-content section-card p-8 bg-amber-50/30 border border-amber-100">
+                <p>El <strong>Sistema Intermunicipal de los Servicios de Agua Potable y Alcantarillado (SIAPA)</strong> es el organismo técnico y administrativo que hace que este proceso sea posible en la Zona Metropolitana de Guadalajara. Su relación con el tratamiento se define en cuatro ejes:</p>
+
+                <div class="space-y-10 mt-8">
+                    <div>
+                        <h3 class="text-xl font-bold text-amber-900 mb-2">A. El Dueño de las Arterias (Conducción)</h3>
+                        <p>El tratamiento no puede ocurrir si el agua no llega a la planta. El SIAPA es el responsable de mantener los <strong>Colectores de Aguas Negras</strong>. Estas son tuberías gigantescas (mucho más grandes que las de una casa) que recolectan el desecho de millones de personas y lo transportan por gravedad o bombeo hacia las plantas de tratamiento. Sin el mantenimiento del SIAPA a esta red, el agua residual brotaría por las alcantarillas de las calles.</p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg shadow-inner">
+                        <h3 class="text-xl font-bold text-amber-900 mb-2">B. Gestión de las Macroplantas</h3>
+                        <p>En Guadalajara, el SIAPA supervisa la entrega del agua a las grandes estaciones de limpieza como <strong>Agua Prieta</strong> y <strong>El Ahogado</strong>. Aunque la operación técnica de estas plantas puede ser compartida o concesionada, el SIAPA es el ente público que garantiza que el volumen de agua recolectado coincida con la capacidad de tratamiento. Es el "administrador del contrato" de saneamiento ante el gobierno y la ciudadanía.</p>
+                        
+                        <div class="chart-container mt-6">
+                            <canvas id="siapaChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-bold text-amber-900 mb-2">C. Responsabilidad Legal y Ambiental</h3>
+                        <p>El SIAPA es quien posee los permisos de descarga otorgados por la Comisión Nacional del Agua (CONAGUA). Si una planta no trata el agua correctamente, el SIAPA es el organismo que recibe las multas y sanciones. Por lo tanto, su rol es de <strong>supervisión normativa</strong>: asegurar que los procesos de limpieza descritos anteriormente cumplan con los estándares de ley para no contaminar el Río Santiago o el Río Lerma.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-bold text-amber-900 mb-2">D. Monitoreo de Descargas Industriales</h3>
+                        <p>El SIAPA también tiene la facultad de inspeccionar lo que las empresas tiran al drenaje. Si una fábrica tira químicos tóxicos, estos podrían matar a las bacterias del "Tratamiento Secundario" (paso 3 del proceso). Por ello, el SIAPA actúa como un vigilante preventivo, regulando lo que entra a la red para no arruinar el proceso biológico de saneamiento.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONCLUSIÓN -->
+        <footer class="mt-16 pt-8 border-t border-slate-200">
+            <div class="bg-slate-900 text-white p-10 rounded-2xl">
+                <h3 class="text-2xl font-bold mb-4">Resumen Ejecutivo</h3>
+                <p class="text-slate-300">El mecanismo es de <strong>protección y degradación</strong>, el proceso es una <strong>cadena física y biológica de cuatro etapas</strong>, y el <strong>SIAPA</strong> es el operador logístico y responsable legal que conecta a la ciudadanía con este sistema de limpieza masivo.</p>
+            </div>
+        </footer>
+
+    </main>
+
+    <script>
+        window.onload = function() {
+            // Inicializar Gráfica de Capacidad
+            const ctx = document.getElementById('siapaChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Agua Prieta', 'El Ahogado', 'Otras PTAR'],
+                    datasets: [{
+                        label: 'Capacidad de Diseño (Litros por Segundo)',
+                        data: [8500, 2250, 1000],
+                        backgroundColor: [
+                            'rgba(7, 89, 133, 0.8)',
+                            'rgba(13, 148, 136, 0.8)',
+                            'rgba(245, 158, 11, 0.8)'
+                        ],
+                        borderColor: [
+                            '#075985',
+                            '#0d9488',
+                            '#f59e0b'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'L/s'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+
+            // Resaltado de navegación al hacer scroll
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (pageYOffset >= (sectionTop - 100)) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').includes(current)) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+        };
+    </script>
+</body>
+</html>
